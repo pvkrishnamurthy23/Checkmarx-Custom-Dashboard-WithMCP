@@ -1,0 +1,19 @@
+<!doctype html>
+<html><body style="font-family:Segoe UI,Arial,sans-serif;color:#1b2430">
+<h2>Checkmarx One weekly security digest</h2>
+<p style="color:#6b7785">{{ d.generated_at }}</p>
+<table cellpadding="6" style="border-collapse:collapse">
+<tr><th align="left">Severity</th><th align="right">Open</th><th align="right">vs last week</th></tr>
+{% for sev in ["CRITICAL", "HIGH", "MEDIUM", "LOW"] %}
+<tr><td>{{ sev }}</td><td align="right">{{ d.totals[sev] }}</td><td align="right">{{ "%+d"|format(d.deltas[sev]) }}</td></tr>
+{% endfor %}
+<tr><td><strong>Total</strong></td><td align="right"><strong>{{ d.totals.TOTAL }}</strong></td><td></td></tr>
+</table>
+<p>SLA breaches: <strong>{{ d.sla_breaches }}</strong></p>
+<h3>Top projects by risk</h3>
+<ol>
+{% for p in d.top_projects %}
+  <li>{{ p.project }} &mdash; risk {{ p.risk }} (C{{ p.CRITICAL }} / H{{ p.HIGH }} / M{{ p.MEDIUM }} / L{{ p.LOW }})</li>
+{% endfor %}
+</ol>
+</body></html>

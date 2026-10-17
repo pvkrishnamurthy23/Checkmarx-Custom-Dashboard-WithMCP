@@ -1,0 +1,21 @@
+{
+  "totalCount": 3,
+  "scansSummaries": [
+    {"scanId": "scan-1",
+     "sastCounters": {"totalCounter": 3, "severityCounters": [{"severity": "HIGH", "counter": 2}, {"severity": "MEDIUM", "counter": 1}],
+                      "stateCounters": [{"state": "TO_VERIFY", "counter": 2}, {"state": "NOT_EXPLOITABLE", "counter": 1}]},
+     "scaCounters": {"totalCounter": 2, "severityCounters": [{"severity": "CRITICAL", "counter": 1}, {"severity": "LOW", "counter": 1}],
+                     "stateCounters": [{"state": "TO_VERIFY", "counter": 2}]},
+     "kicsCounters": {"severityCounters": [{"severity": "MEDIUM", "counter": 1}]},
+     "scaContainersCounters": {"severityCounters": [{"severity": "HIGH", "counter": 4}]},
+     "microEnginesCounters": {"severityCounters": [{"severity": "HIGH", "counter": 1}]},
+     "scaPackagesCounters": {"totalCounter": 9},
+     "someFutureEngineCounters": {"severityCounters": [{"severity": "LOW", "counter": 1}]}},
+    {"scanId": "scan-0",
+     "sastCounters": {"severityCounters": [{"severity": "HIGH", "counter": 3}]},
+     "scaCounters": {"severityCounters": [{"severity": "CRITICAL", "counter": 1}]}},
+    {"scanId": "scan-2",
+     "sastCounters": {"severityCounters": [{"severity": "critical", "counter": 2}, {"severity": "weird", "counter": 1}]},
+     "containersCounters": {"severityCounters": [{"severity": "HIGH", "counter": 2}]}}
+  ]
+}

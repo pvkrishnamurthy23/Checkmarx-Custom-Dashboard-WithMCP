@@ -1,0 +1,5 @@
+{{ c.title }}
+Severity: {{ c.severity }}
+{% for line in c.lines %}
+- {{ line }}
+{% endfor %}

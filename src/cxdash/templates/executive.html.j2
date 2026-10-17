@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Executive security summary</title>
+<style>
+ @page { size: A4; margin: 16mm; }
+ body { font-family: "Segoe UI", Arial, sans-serif; color: #1b2430; font-size: 12px; }
+ h1 { font-size: 20px; margin: 0 0 2px; } h2 { font-size: 14px; margin: 18px 0 6px; }
+ .muted { color: #6b7785; } .kpis { display: flex; gap: 10px; margin: 12px 0; }
+ .kpi { border: 1px solid #d9dee5; border-radius: 6px; padding: 8px 12px; min-width: 90px; }
+ .kpi b { display: block; font-size: 20px; } table { border-collapse: collapse; width: 100%; }
+ th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid #e5e8ec; } td.n, th.n { text-align: right; }
+ img { max-width: 100%; }
+</style></head><body>
+<h1>Checkmarx One &mdash; executive security summary</h1>
+<div class="muted">Generated {{ d.generated_at }} &middot; data synced {{ d.synced }} &middot; filters: {{ d.filters_label }}</div>
+<div class="kpis">
+{% for sev in ["CRITICAL", "HIGH", "MEDIUM", "LOW"] %}
+ <div class="kpi"><span class="muted">{{ sev|title }}</span><b>{{ "{:,}".format(d.kpis[sev]) }}</b></div>
+{% endfor %}
+ <div class="kpi"><span class="muted">Total open</span><b>{{ "{:,}".format(d.kpis.TOTAL) }}</b></div>
+ <div class="kpi"><span class="muted">SLA breaches</span><b>{{ "{:,}".format(d.sla_breaches) }}</b></div>
+ <div class="kpi"><span class="muted">Coverage gaps</span><b>{{ "{:,}".format(d.coverage_gaps) }}</b></div>
+</div>
+<h2>90-day trend</h2>
+{% if d.trend_png %}<img alt="90-day trend by severity" src="data:image/png;base64,{{ d.trend_png }}">
+{% else %}
+<table><tr><th>Date</th><th class="n">Critical</th><th class="n">High</th><th class="n">Medium</th><th class="n">Low</th></tr>
+{% for r in d.trend_sample %}<tr><td>{{ r.date }}</td><td class="n">{{ r.CRITICAL }}</td><td class="n">{{ r.HIGH }}</td><td class="n">{{ r.MEDIUM }}</td><td class="n">{{ r.LOW }}</td></tr>{% endfor %}
+</table>{% endif %}
+<h2>Top 10 projects by risk</h2>
+<table><tr><th>Project</th><th class="n">Risk</th><th class="n">C</th><th class="n">H</th><th class="n">M</th><th class="n">L</th></tr>
+{% for p in d.top_projects %}<tr><td>{{ p.project }}</td><td class="n">{{ p.risk }}</td><td class="n">{{ p.CRITICAL }}</td><td class="n">{{ p.HIGH }}</td><td class="n">{{ p.MEDIUM }}</td><td class="n">{{ p.LOW }}</td></tr>{% endfor %}
+</table>
+</body></html>

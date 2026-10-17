@@ -1,0 +1,7 @@
+{
+  "totalCount": 2,
+  "applications": [
+    {"id": "a1", "name": "Payments Suite", "description": "synthetic", "criticality": 4, "tags": {"bu": "fin"}, "projectIds": ["p1", "p2"]},
+    {"id": "a2", "name": "Back Office", "criticality": 2, "tags": {}, "projectIds": []}
+  ]
+}

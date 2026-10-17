@@ -1,0 +1,12 @@
+Checkmarx One weekly security digest ({{ d.generated_at }})
+
+Open findings: {{ d.totals.TOTAL }}
+{% for sev in ["CRITICAL", "HIGH", "MEDIUM", "LOW"] %}
+{{ sev }}: {{ d.totals[sev] }} ({{ "%+d"|format(d.deltas[sev]) }} vs last week)
+{% endfor %}
+SLA breaches: {{ d.sla_breaches }}
+
+Top projects by risk:
+{% for p in d.top_projects %}
+{{ loop.index }}. {{ p.project }} - risk {{ p.risk }} (C{{ p.CRITICAL }} H{{ p.HIGH }} M{{ p.MEDIUM }} L{{ p.LOW }})
+{% endfor %}

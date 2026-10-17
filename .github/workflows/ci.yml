@@ -1,0 +1,29 @@
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_USER: cx, POSTGRES_PASSWORD: ci-only-password, POSTGRES_DB: cxdash }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U cx" --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests migrations
+      - run: ruff format --check src tests migrations
+      - run: mypy src/cxdash
+      - run: pytest
+      - name: PostgreSQL integration
+        env:
+          CXDASH_TEST_PG_URL: postgresql+psycopg://cx:ci-only-password@localhost:5432/cxdash
+        run: pytest -m integration
+      - run: bandit -q -r src -c pyproject.toml
+      - run: pip-audit

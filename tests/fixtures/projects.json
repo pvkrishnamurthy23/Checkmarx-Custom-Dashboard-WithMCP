@@ -1,0 +1,12 @@
+{
+  "totalCount": 3,
+  "filteredTotalCount": 3,
+  "projects": [
+    {"id": "p1", "name": "payments-api", "createdAt": "2026-01-10T08:00:00.000000Z", "updatedAt": "2026-10-01T08:00:00Z",
+     "groups": ["g-payments"], "tags": {"team": "pay", "tier": "1"}, "repoUrl": "https://git.example.invalid/pay/api", "mainBranch": "master", "applicationIds": ["a1"]},
+    {"id": "p2", "name": "web-ui", "createdAt": "2026-02-10T08:00:00Z", "updatedAt": "2026-10-01T08:00:00Z",
+     "groups": [], "tags": {"team": "web"}, "repoUrl": null, "mainBranch": "dis-devinteg", "applicationIds": ["a1"]},
+    {"id": "p3", "name": "legacy-batch", "createdAt": "2025-05-10T08:00:00Z", "updatedAt": "2026-09-01T08:00:00Z",
+     "groups": null, "tags": null, "mainBranch": "master", "applicationIds": null}
+  ]
+}

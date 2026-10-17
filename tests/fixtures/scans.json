@@ -1,0 +1,25 @@
+{
+  "totalCount": 5,
+  "filteredTotalCount": 5,
+  "scans": [
+    {"id": "scan-1", "status": "Completed", "branch": "master", "projectId": "p1", "createdAt": "2026-10-14T10:00:00Z", "updatedAt": "2026-10-14T10:12:00Z",
+     "engines": ["sast", "sca", "kics", "containers", "sscs"], "initiator": "ci", "sourceType": "git", "sourceOrigin": "Jenkins",
+     "statusDetails": [
+       {"name": "general", "status": "Completed", "details": ""},
+       {"name": "sast", "status": "Completed", "details": ""},
+       {"name": "sca", "status": "Completed", "details": ""},
+       {"name": "kics", "status": "Completed", "details": ""},
+       {"name": "sca-container", "status": "Failed", "details": "image pull failed"},
+       {"name": "sscs", "status": "Completed", "details": ""}
+     ]},
+    {"id": "scan-0", "status": "Completed", "branch": "master", "projectId": "p1", "createdAt": "2026-10-07T10:00:00Z", "updatedAt": "2026-10-07T10:09:00Z",
+     "engines": ["sast", "sca"], "initiator": "ci", "sourceType": "git",
+     "statusDetails": [{"name": "sast", "status": "Completed"}, {"name": "sca", "status": "Completed"}]},
+    {"id": "scan-2", "status": "Completed", "branch": "dis-devinteg", "projectId": "p2", "createdAt": "2026-10-15T09:00:00Z", "updatedAt": "2026-10-15T09:20:00Z",
+     "engines": ["sast"], "statusDetails": [{"name": "sast", "status": "Completed"}]},
+    {"id": "scan-3", "status": "Completed", "branch": "feature/x", "projectId": "p2", "createdAt": "2026-10-15T11:00:00Z", "updatedAt": "2026-10-15T11:20:00Z",
+     "engines": ["sast"], "statusDetails": [{"name": "sast", "status": "Completed"}]},
+    {"id": "scan-4", "status": "Running", "branch": "master", "projectId": "p3", "createdAt": "2026-10-16T01:00:00Z", "updatedAt": "2026-10-16T01:01:00Z",
+     "engines": ["sast"], "statusDetails": []}
+  ]
+}

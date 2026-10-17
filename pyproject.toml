@@ -1,0 +1,108 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cxdash"
+version = "1.0.0"
+description = "Read-only Checkmarx One security dashboard (Dash/Plotly, PostgreSQL)"
+requires-python = ">=3.12"
+dependencies = [
+  "dash>=3.0",
+  "dash-bootstrap-components>=2.0",
+  "dash-ag-grid>=31.3",
+  "plotly>=5.24",
+  "httpx>=0.27",
+  "tenacity>=9.0",
+  "pydantic>=2.8",
+  "pydantic-settings>=2.7",
+  "SQLAlchemy>=2.0.30",
+  "alembic>=1.13",
+  "psycopg[binary]>=3.2",
+  "APScheduler>=3.10,<4",
+  "Authlib>=1.3",
+  "prometheus-client>=0.20",
+  "openpyxl>=3.1",
+  "PyYAML>=6.0",
+  "redis>=5.0",
+  "Jinja2>=3.1",
+  "gunicorn>=22.0; sys_platform != 'win32'",
+  "waitress>=3.0; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.24",
+  "respx>=0.21",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pre-commit>=3.8",
+  "bandit>=1.7",
+  "pip-audit>=2.7",
+  "types-PyYAML",
+  "types-redis",
+  "testcontainers[postgres]>=4.8",
+]
+pdf = ["weasyprint>=62"]
+png = ["kaleido>=1.0"]
+e2e = ["playwright>=1.47", "pytest-playwright>=0.5"]
+pg-embedded = ["pgserver>=0.1"]  # embedded PostgreSQL for `pytest -m integration` without Docker
+
+[project.scripts]
+cxdash = "cxdash.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cxdash = ["alerts/templates/*.j2", "templates/*.j2", "ui/assets/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+markers = ["integration: needs a Postgres container", "e2e: needs a browser"]
+addopts = "-q -m 'not integration and not e2e'"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "SIM", "C4", "RUF"]
+ignore = ["S101", "RUF012", "E501", "RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S105", "S106", "S108", "S311"]
+"src/cxdash/devtools/**" = ["S311"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_return_any = true
+check_untyped_defs = true
+
+# Dash ships no usable type information: treat it as Any rather than drowning real findings.
+[[tool.mypy.overrides]]
+module = ["dash", "dash.*", "dash_bootstrap_components", "dash_bootstrap_components.*", "dash_ag_grid", "dash_ag_grid.*"]
+follow_imports = "skip"
+
+# Spec section 3: strict on cx_client and sync.
+[[tool.mypy.overrides]]
+module = ["cxdash.cx_client.*", "cxdash.sync.*"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+disallow_any_generics = true
+no_implicit_optional = true
+strict_equality = true
+no_implicit_reexport = true
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
